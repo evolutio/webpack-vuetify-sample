@@ -1,10 +1,13 @@
 <script>
-import MainLayout from '@/components/MainLayout';
+  import MainLayout from '@/components/MainLayout';
 
-export default {
-  name: 'app',
-  components: { MainLayout },
-};
+  export default {
+    name: 'app',
+    components: { MainLayout },
+    data: () => {
+      return {};
+    },
+  };
 </script>
 
 <template>

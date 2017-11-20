@@ -7,10 +7,22 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const path = require('path')
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
+const apimock = (process.env.API_MOCK || '1') == '1';
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+  },
+  resolve: {
+    alias: {
+      '~api': resolve(apimock ? 'src/api/mock' : 'src/api'),
+    }
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,

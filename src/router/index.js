@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 function page(name) {
-  return () => import(`@/components/pages/${name}.vue`);
+  return () => import(`@/pages/${name}.vue`);
 }
 
 

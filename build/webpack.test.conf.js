@@ -6,6 +6,10 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 const webpackConfig = merge(baseWebpackConfig, {
   // use inline sourcemap for karma-sourcemap-loader
   module: {
@@ -16,7 +20,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     alias: {
       // necessary to to make lang="scss" work in test when using vue-loader's ?inject option
       // see discussion at https://github.com/vuejs/vue-loader/issues/724
-      'scss-loader': 'sass-loader'
+      'scss-loader': 'sass-loader',
+      '~api': resolve('src/api/mock'),
     }
   },
   plugins: [

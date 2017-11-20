@@ -14,6 +14,12 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
+const apimock = (process.env.API_MOCK || '0') == '1';
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -21,6 +27,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       extract: true,
       usePostCSS: true
     })
+  },
+  resolve: {
+    alias: {
+      '~api': resolve(apimock ? 'src/api/mock' : 'src/api'),
+    }
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
