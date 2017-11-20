@@ -2,11 +2,8 @@
   export default {
     data: () => ({
       items: [
-        { icon: 'trending_up', text: 'Most Popular' },
-        { icon: 'subscriptions', text: 'Subscriptions' },
-        { icon: 'history', text: 'History' },
-        { icon: 'featured_play_list', text: 'Playlists' },
-        { icon: 'watch_later', text: 'Watch Later' },
+        { icon: 'trending_up', text: 'Home', to: { name: 'home' } },
+        { icon: 'subscriptions', text: 'Github repos', to: { name: 'repos' } },
       ],
       items2: [
         { picture: 28, text: 'Joseph' },
@@ -20,7 +17,7 @@
 </script>
 <template>
   <v-list dense>
-    <v-list-tile v-for="item in items" :key="item.text" @click="">
+    <v-list-tile v-for="item in items" :key="item.text" @click="" exact :to="item.to">
       <v-list-tile-action>
         <v-icon>{{ item.icon }}</v-icon>
       </v-list-tile-action>

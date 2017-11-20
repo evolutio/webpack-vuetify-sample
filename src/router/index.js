@@ -12,13 +12,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'index',
-      component: page('index'),
+      name: 'home',
+      component: page('home'),
     },
     {
-      path: '/a',
-      name: 'a',
-      component: page('a'),
+      path: '/repos',
+      name: 'repos',
+      component: page('repos'),
     },
   ],
 });
