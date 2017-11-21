@@ -1,5 +1,5 @@
-import AppApi from '~api/api.js';
 import store from '@/store/index.js';
+import { AUTH_USER } from '@/store/actions';
 
 const unauth_redirect = { name: 'login' };
 
@@ -26,16 +26,15 @@ function proceed(to, next) {
 }
 
 export default function (to, from, next) {
-  if (store.state.logged_user === undefined) {
-    AppApi.whoami().then((response) => {
-      if (response.data.authenticated) {
-        store.commit('SET_LOGGED_USER', response.data.user);
-      } else {
-        store.commit('SET_LOGGED_USER', null);
-      }
-      proceed(to, next);
-    });
-  } else {
+  // proceed if already logged
+  if (store.state.logged_user) {
     proceed(to, next);
+    return;
   }
+
+  store.dispatch(AUTH_USER).then(() => {
+    proceed(to, next);
+  }).catch((err) => {
+    console.warn(err);  // eslint-disable-line
+  });
 }
