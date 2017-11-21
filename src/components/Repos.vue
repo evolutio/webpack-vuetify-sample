@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     findrepos() {
-      AppApi.list_repos(this.username).then((response) => {
+      return AppApi.list_repos(this.username).then((response) => {
         this.repos = response.data;
       });
     },
