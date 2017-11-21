@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { AUTH_USER } from '@/store/actions';
-import AppApi from '@/api/api';
+import AppApi from '~api/api';
 
 Vue.use(Vuex);
 
@@ -20,16 +19,18 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    [AUTH_USER]({ commit }) {
-      AppApi.whoami().then((response) => {
-        if (response.data.authenticated) {
-          const { user } = response.data;
-          commit('SET_LOGGED_USER', user);
-          return user;
-        }
+    AUTH_USER({ commit }) {
+      return new Promise((resolve, reject) => {
+        AppApi.whoami().then((response) => {
+          if (response.data.authenticated) {
+            const { user } = response.data;
+            commit('SET_LOGGED_USER', user);
+            resolve(user);
+          }
 
-        commit('SET_LOGGED_USER', null);
-        throw Error('Invalid auth');
+          commit('SET_LOGGED_USER', null);
+          reject(new Error('Invalid auth'));
+        });
       });
     },
   },

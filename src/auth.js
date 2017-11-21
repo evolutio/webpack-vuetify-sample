@@ -1,5 +1,4 @@
 import store from '@/store/index.js';
-import { AUTH_USER } from '@/store/actions';
 
 const unauth_redirect = { name: 'login' };
 
@@ -32,9 +31,9 @@ export default function (to, from, next) {
     return;
   }
 
-  store.dispatch(AUTH_USER).then(() => {
+  store.dispatch('AUTH_USER').then(() => {
     proceed(to, next);
-  }).catch((err) => {
-    console.warn(err);  // eslint-disable-line
+  }).catch(() => {
+    proceed(to, next);
   });
 }
