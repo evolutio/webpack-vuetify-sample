@@ -7,6 +7,7 @@ import router from './router.js';
 import store from './store';
 
 import('./assets/main.styl');
+import('babel-polyfill');
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);

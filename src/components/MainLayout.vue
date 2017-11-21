@@ -1,15 +1,30 @@
 <script>
-  import LeftMenu from '@/components/LeftMenu';
-  
-  export default {
-    data: () => ({
-      drawer: true,
-    }),
-    props: {
-      source: String,
+import LeftMenu from '@/components/LeftMenu';
+import AppApi from '~api/api.js';
+import Vuex from 'vuex';
+
+export default {
+  props: {
+    source: String,
+  },
+  data: () => ({
+    drawer: true,
+  }),
+  methods: {
+    logoff() {
+      AppApi.logoff().then(() => {
+        this.$store.commit('SET_LOGGED_USER', null);
+        this.$router.go({ name: 'login' });
+      });
     },
-    components: { LeftMenu },
-  };
+  },
+  computed: {
+    ...Vuex.mapGetters(['logged_user']),
+  },
+  components: {
+    LeftMenu,
+  },
+};
 </script>
 
 <style>
@@ -19,10 +34,7 @@
 </style>
 
 <template>
-  <v-app
-    dark
-    id="inspire"
-  >
+  <v-app dark id="inspire">
     <v-navigation-drawer fixed clipped v-model="drawer" app>
       <LeftMenu></LeftMenu>
     </v-navigation-drawer>
@@ -33,15 +45,21 @@
         <v-icon class="ml-3">fa-youtube</v-icon>
       </v-toolbar-title>
       <v-layout row align-center style="max-width: 650px">
-        <v-text-field
-          placeholder="Search..."
-          single-line
-          append-icon="search"
-          :append-icon-cb="() => {}"
-          class="white--text"
-          hide-details
-        ></v-text-field>
+        <v-text-field placeholder="Search..." single-line append-icon="search" 
+          :append-icon-cb="() => {}" class="white--text" hide-details></v-text-field>
       </v-layout>
+      <v-spacer></v-spacer>
+
+      <v-menu v-if="logged_user" bottom left offset-y origin="top right" transition="v-slide-y-transition">
+        <v-btn flat dark ripple slot="activator">
+          {{logged_user.username}}
+        </v-btn>
+        <v-list>
+          <v-list-tile @click="logoff()">
+            <v-list-tile-title v-text="'Log off'"></v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
     <v-content>
       <router-view/>

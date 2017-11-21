@@ -20,6 +20,7 @@ function proceed(to, next) {
   if (allowed) {
     next();
   } else {
+    // next();
     next(unauth_redirect);
   }
 }

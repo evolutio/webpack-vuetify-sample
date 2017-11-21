@@ -1,11 +1,14 @@
 <script>
-  export default {
-    data: () => ({
-    }),
-  };
+import Login from '@/components/Login.vue';
+
+export default {
+  data: () => ({
+  }),
+  components: { Login },
+};
 </script>
 
 <template>
-  <h1>faça login, jovem</h1>
+  <Login></Login>
 </template>
 

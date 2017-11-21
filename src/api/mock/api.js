@@ -4,6 +4,7 @@ export default {
   list_repos: mockasync(list_repos),
   list_issues: mockasync(list_issues),
   login: mockasync(login),
+  logoff: mockasync(logoff),
   whoami: mockasync(whoami),
 };
 
@@ -51,6 +52,10 @@ function login(username, password) {
     };
   }
   return logged_user;
+}
+
+function logoff() {
+  logged_user = null;
 }
 
 function whoami() {
