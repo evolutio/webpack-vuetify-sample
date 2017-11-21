@@ -1,24 +1,24 @@
 <script>
-import AppApi from '~api/api.js';
-
 export default {
   data() {
     return {
       username: '',
       password: '',
       loading: false,
+      error: false,
     };
   },
   methods: {
     login() {
       this.loading = true;
-      AppApi.login(this.username, this.password).then((result) => {
+      this.error = false;
+      const { username, password, $router, $store } = this;
+      $store.dispatch('LOGIN', { username, password }).then(() => {
+        $router.push({ name: 'home' });
         this.loading = false;
-        const logged_user = result.data;
-        if (logged_user) {
-          this.$store.commit('SET_LOGGED_USER', logged_user);
-          this.$router.push({ name: 'home' });
-        }
+      }).catch(() => {
+        this.error = true;
+        this.loading = false;
       });
     },
   },
@@ -37,7 +37,8 @@ export default {
         <v-container fluid>
           <v-form>
             <v-text-field label="Username" v-model="username"></v-text-field>
-            <v-text-field label="Password" v-model="password" type="password"></v-text-field>
+            <v-text-field label="Password" v-model="password" type="password" @keyup.enter="login()"></v-text-field>
+            <small style="color: red;" v-if="error">Usuário ou senha inválido</small>
           </v-form>
           <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
         </v-container>

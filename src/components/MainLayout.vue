@@ -1,6 +1,5 @@
 <script>
 import LeftMenu from '@/components/LeftMenu';
-import AppApi from '~api/api.js';
 import Vuex from 'vuex';
 
 export default {
@@ -12,9 +11,9 @@ export default {
   }),
   methods: {
     logoff() {
-      AppApi.logoff().then(() => {
-        this.$store.commit('SET_LOGGED_USER', null);
-        this.$router.go({ name: 'login' });
+      const { $router, $store } = this;
+      $store.dispatch('LOGOFF').then(() => {
+        $router.go({ name: 'login' });
       });
     },
   },

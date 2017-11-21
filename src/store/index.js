@@ -31,6 +31,23 @@ const store = new Vuex.Store({
         return null;
       });
     },
+    LOGIN({ commit }, { username, password }) {
+      return AppApi.login(username, password).then((result) => {
+        const logged_user = result.data;
+        if (logged_user) {
+          commit('SET_LOGGED_USER', logged_user);
+          return logged_user;
+        }
+        commit('SET_LOGGED_USER', null);
+        throw Error('Invalid auth');
+      });
+    },
+    LOGOFF({ commit }) {
+      return AppApi.logoff().then(() => {
+        commit('SET_LOGGED_USER', null);
+        return null;
+      });
+    },
   },
 });
 
