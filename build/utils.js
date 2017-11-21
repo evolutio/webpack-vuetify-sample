@@ -97,3 +97,7 @@ exports.createNotifierCallback = function () {
     })
   }
 }
+
+exports.resolve = function (filepath) {
+  return path.join(__dirname, '..', filepath)
+}

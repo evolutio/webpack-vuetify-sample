@@ -9,10 +9,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const path = require('path')
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
-}
-
 const apimock = (process.env.API_MOCK || '1') == '1';
 
 const devWebpackConfig = merge(baseWebpackConfig, {
@@ -21,7 +17,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   resolve: {
     alias: {
-      '~api': resolve(apimock ? 'src/api/mock' : 'src/api'),
+      '~api': utils.resolve(apimock ? 'src/api/mock' : 'src/api'),
     }
   },
   // cheap-module-eval-source-map is faster for development
