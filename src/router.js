@@ -8,25 +8,41 @@ function page(name) {
   return () => import(`@/pages/${name}.vue`);
 }
 
+function layout(name) {
+  return () => import(`@/layouts/${name}.vue`);
+}
+
 const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: page('home'),
+      component: layout('main'),
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: page('home'),
+        },
+        {
+          path: 'repos',
+          name: 'repos',
+          component: page('repos'),
+        },
+      ],
     },
     {
-      path: '/repos',
-      name: 'repos',
-      component: page('repos'),
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: page('login'),
-      meta: {
-        auth_allow: 'ALL',
-      },
+      path: '/',
+      component: layout('login'),
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: page('login'),
+          meta: {
+            auth_allow: 'ALL',
+          },
+        },
+      ],
     },
   ],
 });

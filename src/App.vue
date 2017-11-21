@@ -1,9 +1,6 @@
 <script>
-  import MainLayout from '@/components/MainLayout';
-
   export default {
     name: 'app',
-    components: { MainLayout },
     data: () => {
       return {};
     },
@@ -12,7 +9,7 @@
 
 <template>
   <div id="app">
-    <MainLayout></MainLayout>
+    <router-view></router-view>
   </div>
 </template>
 
