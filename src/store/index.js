@@ -20,17 +20,15 @@ const store = new Vuex.Store({
   },
   actions: {
     AUTH_USER({ commit }) {
-      return new Promise((resolve, reject) => {
-        AppApi.whoami().then((response) => {
-          if (response.data.authenticated) {
-            const { user } = response.data;
-            commit('SET_LOGGED_USER', user);
-            resolve(user);
-          }
+      return AppApi.whoami().then((response) => {
+        if (response.data.authenticated) {
+          const { user } = response.data;
+          commit('SET_LOGGED_USER', user);
+          return user;
+        }
 
-          commit('SET_LOGGED_USER', null);
-          reject(new Error('Invalid auth'));
-        });
+        commit('SET_LOGGED_USER', null);
+        return null;
       });
     },
   },

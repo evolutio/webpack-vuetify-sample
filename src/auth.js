@@ -33,7 +33,5 @@ export default function (to, from, next) {
 
   store.dispatch('AUTH_USER').then(() => {
     proceed(to, next);
-  }).catch(() => {
-    proceed(to, next);
   });
 }
